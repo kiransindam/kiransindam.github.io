@@ -1,22 +1,1056 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
+
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta name="description" content="">
-	<title>My Website</title>
+    <meta charset="UTF-S">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suraj Kumar</title>
+    <meta name="description"
+        content="The professional portfolio of Suraj Kumar, a Data Scientist and Machine Learning Engineer specializing in AI, ML, and data visualization.">
+    <link rel="icon" type="image/png" href="./profile/profile.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+            overflow-x: hidden;
+        }
+
+        /* Custom Cursor */
+        .cursor {
+            width: 30px;
+            height: 30px;
+            border: 2px solid #333;
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.2s ease-out, background-color 0.2s ease, width 0.2s ease, height 0.2s ease, border-color 0.2s ease;
+            transform-origin: center center;
+            mix-blend-mode: difference;
+        }
+
+        .cursor-grow {
+            transform: scale(2);
+            background-color: #fff;
+            border-color: #fff;
+        }
+
+        /* Preloader */
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #f3f4f6;
+            z-index: 10000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.5s ease 1s;
+        }
+
+        .preloader-text {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 1s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Hide scrollbar */
+        body::-webkit-scrollbar {
+            display: none;
+        }
+
+        body {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        /* Animation states */
+        .gsap-reveal {
+            opacity: 0;
+            transform: translateY(50px);
+        }
+
+        .gsap-reveal-img {
+            opacity: 0;
+            transform: scale(0.9);
+        }
+
+        /* Glassmorphism Header */
+        .glass-header {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        /* NEW: Class to hide header on scroll down */
+        #header.header-hidden {
+            transform: translateY(-100%);
+        }
+
+        /* Subtle background pattern for hero section */
+        .hero-pattern {
+            background-image: radial-gradient(#d1d5db 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+
+        /* Mobile Menu Transition */
+        #mobile-menu {
+            transition: transform 0.3s ease-in-out;
+        }
+
+        /* Style for the active filter button */
+        .filter-btn.active-filter,
+        .blog-filter-btn.active-filter {
+            background-color: #111827;
+            color: #ffffff;
+        }
+    </style>
 </head>
+
 <body>
-	<header>
-		<h1>Welcome</h1>
-	</header>
+    <div class="cursor hidden md:block"></div>
 
-	<main>
-		<p>Your content goes here.</p>
-	</main>
+    <div id="preloader">
+        <div class="preloader-text">
+            <p class="text-2xl font-bold">Suraj Kumar | Data Science Portfolio</p>
+        </div>
+    </div>
 
-	<footer>
-		<p>&copy; 2026 My Website</p>
-	</footer>
+    <header class="fixed top-0 left-0 right-0 z-50 transition-all duration-300" id="header">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#home" class="text-2xl font-bold text-black z-50">Suraj Kumar</a>
+            <nav class="hidden md:flex space-x-8 items-center">
+                <a href="#home" class="nav-link text-gray-600 hover:text-black transition-colors">Home</a>
+                <a href="#about" class="nav-link text-gray-600 hover:text-black transition-colors">About</a>
+                <a href="#research" class="nav-link text-gray-600 hover:text-black transition-colors">Research</a>
+                <a href="#education" class="nav-link text-gray-600 hover:text-black transition-colors">Education</a>
+                <a href="#experience" class="nav-link text-gray-600 hover:text-black transition-colors">Experience</a>
+                <a href="#certifications"
+                    class="nav-link text-gray-600 hover:text-black transition-colors">Certifications</a>
+                <a href="#projects" class="nav-link text-gray-600 hover:text-black transition-colors">Projects</a>
+                <a href="#blog" class="nav-link text-gray-600 hover:text-black transition-colors">Blog</a>
+                <a href="#skills" class="nav-link text-gray-600 hover:text-black transition-colors">Skills</a>
+            </nav>
+            <a href="#contact"
+                class="hidden md:block bg-black hover:bg-gray-800 text-white font-semibold py-2 px-4 rounded-lg transition-colors">Contact
+                Me</a>
+
+            <button id="mobile-menu-button" class="md:hidden z-50">
+                <i data-lucide="menu" class="w-6 h-6"></i>
+            </button>
+        </div>
+        <div id="mobile-menu"
+            class="absolute top-0 left-0 w-full h-screen bg-white transform -translate-x-full md:hidden">
+            <nav class="flex flex-col items-center justify-center h-full space-y-8">
+                <a href="#home"
+                    class="mobile-nav-link text-2xl text-gray-700 hover:text-black transition-colors">Home</a>
+                <a href="#about"
+                    class="mobile-nav-link text-2xl text-gray-700 hover:text-black transition-colors">About</a>
+                <a href="#research"
+                    class="mobile-nav-link text-2xl text-gray-700 hover:text-black transition-colors">Research</a>
+                <a href="#education"
+                    class="mobile-nav-link text-2xl text-gray-700 hover:text-black transition-colors">Education</a>
+                <a href="#experience"
+                    class="mobile-nav-link text-2xl text-gray-700 hover:text-black transition-colors">Experience</a> <a
+                    href="#certifications"
+                    class="mobile-nav-link text-2xl text-gray-700 hover:text-black transition-colors">Certifications</a>
+                <a href="#projects"
+                    class="mobile-nav-link text-2xl text-gray-700 hover:text-black transition-colors">Projects</a>
+                <a href="#blog"
+                    class="mobile-nav-link text-2xl text-gray-700 hover:text-black transition-colors">Blog</a>
+                <a href="#skills"
+                    class="mobile-nav-link text-2xl text-gray-700 hover:text-black transition-colors">Skills</a>
+                <a href="#contact"
+                    class="mobile-nav-link text-2xl text-gray-700 hover:text-black transition-colors">Contact</a>
+            </nav>
+        </div>
+    </header>
+    <main>
+        <section id="home" class="min-h-screen flex items-center bg-gray-100 hero-pattern">
+            <div class="container mx-auto px-6">
+                <div class="flex flex-col-reverse md:flex-row items-center justify-center gap-16">
+                    <div class="text-center md:text-left">
+                        <h1 class="gsap-reveal text-5xl md:text-8xl font-extrabold mb-4 text-black leading-tight">
+                            Suraj<br>Kumar</h1>
+                        <p class="gsap-reveal text-2xl md:text-3xl text-gray-600">Aspiring Data Scientist & Machine
+                            Learning Engineer</p>
+                    </div>
+                    <div class="flex justify-center">
+                        <img src="./profile/profile.png"
+                            onerror="this.onerror=null;this.src='https://placehold.co/400x400/e5e7eb/111827?text=SK';"
+                            alt="Suraj Kumar"
+                            class="gsap-reveal-img w-64 h-64 md:w-80 md:h-80 object-cover rounded-full border-8 border-white shadow-2xl transition-transform duration-300 hover:-rotate-3">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="py-24 bg-white">
+            <div class="container mx-auto px-6 max-w-4xl">
+                <h2 class="gsap-reveal text-4xl font-bold text-center mb-12 text-black">About Me</h2>
+                <p class="gsap-reveal text-lg text-gray-700 mb-6 leading-relaxed text-justify">
+                    I'm a Mca-Aiml student at UPES with a B.Sc. in Data Science, specializing in AI & ML. My passion
+                    lies in
+                    neural networks and machine learning research, where I focus on enhancing model performance,
+                    reducing errors, and advancing the connections within neural networks. Driven by curiosity and a
+                    problem-solving mindset, I aim to push the boundaries of AI, transforming complex data into
+                    intelligent solutions that make a real impact.
+                </p>
+            </div>
+        </section>
+
+        <section id="research" class="py-24 bg-gray-100">
+            <div class="container mx-auto px-6 text-center">
+                <h2 class="gsap-reveal text-4xl font-bold mb-16 text-black">Publications & Research</h2>
+                <div class="max-w-4xl mx-auto">
+                    <div class="gsap-reveal text-left">
+                        <div class="flex items-start space-x-4">
+                            <div>
+                                <div class="flex items-center justify-center w-12 h-12 bg-white rounded-full">
+                                    <i data-lucide="file-text" class="w-6 h-6 text-black"></i>
+                                </div>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold mb-1 text-gray-900">Elevating Large Language Models'
+                                    Comprehensibility with SHAP Values</h3>
+                                <p class="text-gray-500 mb-2">Book Chapter in: Revolutionizing Machine Learning with
+                                    Large Language Models, 2025</p>
+                                <p class="text-gray-700 mb-4 leading-relaxed text-justify">
+                                    This chapter explores the application of SHAP (SHapley Additive exPlanations) values
+                                    to enhance the interpretability and transparency of Large Language Models, making
+                                    complex AI systems more understandable for researchers and practitioners.
+                                </p>
+                                <a href="#" target="_blank" class="font-semibold text-black hover:underline">
+                                    Link (Forthcoming) <i data-lucide="arrow-right" class="inline w-4 h-4"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="education" class="py-24 bg-white">
+            <div class="container mx-auto px-6 max-w-4xl">
+                <div class="gsap-reveal">
+                    <h3 class="text-4xl font-bold text-center mb-12 text-black">Education</h3>
+                    <div class="relative max-w-2xl mx-auto border-l-2 border-gray-200">
+                        <div class="mb-8 ml-6">
+                            <span
+                                class="absolute flex items-center justify-center w-6 h-6 bg-black rounded-full -left-3 ring-8 ring-white">
+                                <i data-lucide="graduation-cap" class="w-3 h-3 text-white"></i>
+                            </span>
+                            <h3 class="flex items-center mb-1 text-lg font-semibold text-gray-900">Master of Computer
+                                Applications (AI & ML)</h3>
+                            <time class="block mb-2 text-sm font-normal leading-none text-gray-500">UPES, Dehradun |
+                                2024 - Present</time>
+                        </div>
+                        <div class="ml-6">
+                            <span
+                                class="absolute flex items-center justify-center w-6 h-6 bg-black rounded-full -left-3 ring-8 ring-white">
+                                <i data-lucide="book-marked" class="w-3 h-3 text-white"></i>
+                            </span>
+                            <h3 class="mb-1 text-lg font-semibold text-gray-900">Bachelor of Science in Data Science
+                            </h3>
+                            <time class="block mb-2 text-sm font-normal leading-none text-gray-500">Bhagwan Mahavir
+                                University, Surat | 2021 - 2024</time>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="experience" class="py-24 bg-gray-100">
+            <div class="container mx-auto px-6 max-w-4xl">
+                <div class="gsap-reveal">
+                    <h3 class="text-4xl font-bold text-center mb-12 text-black">Work Experience</h3>
+                    <div class="relative max-w-2xl mx-auto border-l-2 border-gray-200">
+
+                        <div class="mb-8 ml-6">
+                            <span
+                                class="absolute flex items-center justify-center w-6 h-6 bg-black rounded-full -left-3 ring-8 ring-white">
+                                <i data-lucide="briefcase" class="w-3 h-3 text-white"></i>
+                            </span>
+
+                            <h3 class="flex items-center mb-1 text-lg font-semibold text-gray-900">
+                                Artificial Intelligence Intern
+                            </h3>
+
+                            <time class="block mb-2 text-sm font-normal leading-none text-gray-500">
+                                IBM, Remote | Jan 2026 - May 2026
+                            </time>
+
+                            <ul class="mt-2 text-base font-normal text-gray-600 list-disc list-inside space-y-1">
+                                <li>Developed an AI-assisted Voice & Text Chatbot using NLP techniques for real-time
+                                    user query handling.</li>
+
+                                <li>Integrated speech-to-text and text-to-speech functionalities to enable seamless
+                                    voice-based interaction.</li>
+
+                                <li>Designed conversational flows and implemented intent recognition models to improve
+                                    response understanding.</li>
+
+                                <li>Built and deployed backend APIs for real-time chatbot interaction and response
+                                    generation.</li>
+
+                                <li>Enhanced chatbot performance and user experience through continuous testing and
+                                    optimization.</li>
+                            </ul>
+                        </div>
+
+                        <div class="mb-8 ml-6">
+                            <span
+                                class="absolute flex items-center justify-center w-6 h-6 bg-black rounded-full -left-3 ring-8 ring-white">
+                                <i data-lucide="briefcase" class="w-3 h-3 text-white"></i>
+                            </span>
+
+                            <h3 class="flex items-center mb-1 text-lg font-semibold text-gray-900">
+                                Associate Software Engineer Trainee
+                            </h3>
+
+                            <time class="block mb-2 text-sm font-normal leading-none text-gray-500">
+                                Accenture | Feb 2026 - Present
+                            </time>
+
+                            <ul class="mt-2 text-base font-normal text-gray-600 list-disc list-inside space-y-1">
+                                <li>Working with HANA Database for large-scale data processing, query optimization, and
+                                    performance tuning.</li>
+
+                                <li>Learning enterprise data workflows, backend systems, and database-driven application
+                                    development.</li>
+
+                                <li>Collaborating on analytics-oriented and data handling solutions in an enterprise
+                                    environment.</li>
+
+                                <li>Gaining hands-on exposure to data management and enterprise-level software
+                                    development practices.</li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="certifications" class="py-24 bg-white">
+            <div class="container mx-auto px-6 max-w-4xl">
+                <h2 class="gsap-reveal text-4xl font-bold text-center mb-12 text-black">
+                    Certifications & Courses
+                </h2>
+                <div class="space-y-8">
+                    <div class="gsap-reveal flex items-start space-x-4">
+                        <div>
+                            <div class="flex items-center justify-center w-12 h-12 bg-gray-100 rounded-full shadow-md">
+                                <i data-lucide="award" class="w-6 h-6 text-black"></i>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-900">Data Science Mentorship Program 1.0</h3>
+                            <p class="text-gray-500 mb-2">CampusX | Issued Feb 2024</p>
+                            <p class="text-gray-600 mb-3">
+                                Learned key concepts in <strong>Python</strong>, <strong>MySQL</strong>,
+                                <strong>Data Analysis</strong>, <strong>Data Cleaning</strong>, and
+                                <strong>Machine Learning</strong> through hands-on projects and mentorship.
+                            </p>
+                            <a href="./certificate/DsmpCertificateCampusx.png" target="_blank"
+                                class="font-semibold text-black hover:underline">
+                                View Credential <i data-lucide="external-link" class="inline w-4 h-4"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="gsap-reveal flex items-start space-x-4">
+                        <div>
+                            <div class="flex items-center justify-center w-12 h-12 bg-gray-100 rounded-full shadow-md">
+                                <i data-lucide="award" class="w-6 h-6 text-black"></i>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-900">SQL for Data Science</h3>
+                            <p class="text-gray-500 mb-2">Coursera | Issued Oct 2025</p>
+                            <p class="text-gray-600 mb-3">
+                                Learned <strong>SQL queries</strong>, <strong>joins</strong>,
+                                <strong>aggregations</strong>, and basic <strong>database handling</strong>.
+                            </p>
+                            <a href="./certificate/sqlForDataScience.pdf" target="_blank"
+                                class="font-semibold text-black hover:underline">
+                                View Credential <i data-lucide="external-link" class="inline w-4 h-4"></i>
+                            </a>
+                        </div>
+                    </div>
+
+
+
+                    <div class="gsap-reveal flex items-start space-x-4">
+                        <div>
+                            <div class="flex items-center justify-center w-12 h-12 bg-gray-100 rounded-full shadow-md">
+                                <i data-lucide="award" class="w-6 h-6 text-black"></i>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-900">DSA Supreme 4.0 - Love Babbar</h3>
+                            <p class="text-gray-500 mb-2">Code Help | Issued 6 Dec 2025</p>
+                            <p class="text-gray-600 mb-3">
+                                Learned <strong>C++</strong>, <strong>OOPs</strong>, Data Structure & algorithms
+                                <strong>problem-solving</strong>.
+                            </p>
+                            <a href="./certificate/1765033289538-certificate.png" target="_blank"
+                                class="font-semibold text-black hover:underline">
+                                View Credential <i data-lucide="external-link" class="inline w-4 h-4"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="gsap-reveal flex items-start space-x-4">
+                        <div>
+                            <div class="flex items-center justify-center w-12 h-12 bg-gray-100 rounded-full shadow-md">
+                                <i data-lucide="award" class="w-6 h-6 text-black"></i>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-900">What is Data Science?</h3>
+                            <p class="text-gray-500 mb-2">Coursera | Issued Oct 2025</p>
+                            <p class="text-gray-600 mb-3">
+                                Explored the <strong>foundations of data science</strong>, including the
+                                <strong>roles of data scientists</strong>, <strong>data-driven decision making</strong>,
+                                and the <strong>data science lifecycle</strong>.
+                            </p>
+                            <a href="./certificate/CourseraYP8WU9QI21OW.pdf" target="_blank"
+                                class="font-semibold text-black hover:underline">
+                                View Credential <i data-lucide="external-link" class="inline w-4 h-4"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="projects" class="py-24 bg-gray-100">
+            <div class="container mx-auto px-6">
+                <h2 class="gsap-reveal text-4xl font-bold text-center mb-12 text-black">Featured Projects</h2>
+
+                <div id="project-filters" class="gsap-reveal flex flex-wrap justify-center gap-2 md:gap-4 mb-16">
+                    <button data-filter="all"
+                        class="filter-btn active-filter bg-black text-white font-semibold py-2 px-5 rounded-full transition-colors">All</button>
+                    <button data-filter="ml"
+                        class="filter-btn bg-white text-gray-700 font-semibold py-2 px-5 rounded-full transition-colors hover:bg-gray-200">Machine
+                        Learning</button>
+                    <button data-filter="dl"
+                        class="filter-btn bg-white text-gray-700 font-semibold py-2 px-5 rounded-full transition-colors hover:bg-gray-200">Deep
+                        Learning</button>
+                    <button data-filter="nlp"
+                        class="filter-btn bg-white text-gray-700 font-semibold py-2 px-5 rounded-full transition-colors hover:bg-gray-200">NLP
+                        / GenAI</button>
+                    <button data-filter="cv"
+                        class="filter-btn bg-white text-gray-700 font-semibold py-2 px-5 rounded-full transition-colors hover:bg-gray-200">Computer
+                        Vision</button>
+                    <button data-filter="viz"
+                        class="filter-btn bg-white text-gray-700 font-semibold py-2 px-5 rounded-full transition-colors hover:bg-gray-200">Data
+                        Visualization</button>
+                </div>
+
+                <div class="space-y-12">
+                    <div class="project-item gsap-reveal grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center"
+                        data-category="nlp ml">
+                        <div class="bg-white p-4 rounded-lg shadow-lg border border-gray-200">
+                            <img src="./projectImage/genai.png"
+                                onerror="this.onerror=null;this.src='https://placehold.co/1280x720/e5e7eb/111827?text=Project+Screenshot';"
+                                alt="DocuMind AI Study Partner Screenshot" class="rounded-md w-full object-cover">
+                        </div>
+                        <div class="text-left">
+                            <h3 class="text-3xl font-bold mb-3 text-black">DocuMind: AI Study Partner</h3>
+                            <p class="text-gray-700 mb-4 leading-relaxed">
+                                A powerful, multimodal AI study assistant built with Streamlit and GPT-4o. It allows
+                                users to upload documents (PDF, DOCX) and images to interactively ask questions,
+                                summarize content, and extract key insights from their study materials. Features a full
+                                chat interface with context management.
+                            </p>
+                            <div class="flex flex-wrap gap-2 mb-6">
+                                <span
+                                    class="bg-gray-200 text-gray-800 text-sm font-semibold mr-2 px-3 py-1 rounded-full">Streamlit</span>
+                                <span
+                                    class="bg-gray-200 text-gray-800 text-sm font-semibold mr-2 px-3 py-1 rounded-full">OpenAI
+                                    GPT-4o</span>
+                                <span
+                                    class="bg-gray-200 text-gray-800 text-sm font-semibold mr-2 px-3 py-1 rounded-full">LangChain</span>
+                                <span
+                                    class="bg-gray-200 text-gray-800 text-sm font-semibold mr-2 px-3 py-1 rounded-full">Python</span>
+                            </div>
+                            <div class="flex items-center space-x-4">
+                                <a href="https://github.com/surajksharma7/documind" target="_blank"
+                                    class="font-semibold text-black hover:underline inline-flex items-center">
+                                    Live Demo <i data-lucide="external-link" class="ml-1 w-4 h-4"></i>
+                                </a>
+                                <a href="https://github.com/surajksharma7/documind" target="_blank"
+                                    class="font-semibold text-black hover:underline inline-flex items-center">
+                                    Source Code <i data-lucide="github" class="ml-1 w-4 h-4"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-item gsap-reveal grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center"
+                        data-category="ml viz">
+                        <div class="bg-white p-4 rounded-lg shadow-lg border border-gray-200 md:order-2">
+                            <img src="./projectImage/cancer.png"
+                                onerror="this.onerror=null;this.src='https://placehold.co/1280x720/e5e7eb/111827?text=Project+Screenshot';"
+                                alt="Breast Cancer Prediction System Screenshot" class="rounded-md w-full object-cover">
+                        </div>
+                        <div class="text-left md:order-1">
+                            <h3 class="text-3xl font-bold mb-3 text-black">Breast Cancer Prediction System</h3>
+                            <p class="text-gray-700 mb-4 leading-relaxed">
+                                Developed a machine learning-powered web application to aid in the early detection of
+                                breast cancer. The system uses a classification model trained on tumor characteristics
+                                to predict whether a growth is benign or malignant. I built an intuitive user interface
+                                with Streamlit, enabling users to input medical measurements and receive instant,
+                                interpretable results.
+                            </p>
+                            <div class="flex flex-wrap gap-2 mb-6">
+                                <span
+                                    class="bg-gray-200 text-gray-800 text-sm font-semibold mr-2 px-3 py-1 rounded-full">Streamlit</span>
+                                <span
+                                    class="bg-gray-200 text-gray-800 text-sm font-semibold mr-2 px-3 py-1 rounded-full">Scikit-learn</span>
+                                <span
+                                    class="bg-gray-200 text-gray-800 text-sm font-semibold mr-2 px-3 py-1 rounded-full">Pandas</span>
+                                <span
+                                    class="bg-gray-200 text-gray-800 text-sm font-semibold mr-2 px-3 py-1 rounded-full">Plotly</span>
+                            </div>
+                            <div class="flex items-center space-x-4">
+                                <a href="https://breast-cancer-prediction-system-4cs8k9isc5oqj9o4vqjfco.streamlit.app/"
+                                    target="_blank"
+                                    class="font-semibold text-black hover:underline inline-flex items-center">
+                                    Live Demo <i data-lucide="external-link" class="ml-1 w-4 h-4"></i>
+                                </a>
+                                <a href="https://github.com/surajksharma7/breast-cancer-prediction-system"
+                                    target="_blank"
+                                    class="font-semibold text-black hover:underline inline-flex items-center">
+                                    Source Code <i data-lucide="github" class="ml-1 w-4 h-4"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-item gsap-reveal grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center"
+                        data-category="ml nlp">
+                        <div class="bg-white p-4 rounded-lg shadow-lg border border-gray-200">
+                            <img src="./projectImage/laptop.png"
+                                onerror="this.onerror=null;this.src='https://placehold.co/1280x720/e5e7eb/111827?text=Project+Screenshot';"
+                                alt="Laptop Recommendation System Screenshot" class="rounded-md w-full object-cover">
+                        </div>
+                        <div class="text-left">
+                            <h3 class="text-3xl font-bold mb-3 text-black">Laptop Recommendation System</h3>
+                            <p class="text-gray-700 mb-4 leading-relaxed">
+                                A smart, data-driven web application that helps
+                                users find laptops tailored to their needs. By analyzing technical specifications,
+                                the system converts each laptop into a numerical
+                                vector and calculates similarity scores to provide accurate recommendations. Built with
+                                Python and Streamlit, it offers an interactive interface.
+                            </p>
+                            <div class="flex flex-wrap gap-2 mb-6">
+                                <span
+                                    class="bg-gray-200 text-gray-800 text-sm font-semibold mr-2 px-3 py-1 rounded-full">Python</span>
+                                <span
+                                    class="bg-gray-200 text-gray-800 text-sm font-semibold mr-2 px-3 py-1 rounded-full">Streamlit</span>
+                                <span
+                                    class="bg-gray-200 text-gray-800 text-sm font-semibold mr-2 px-3 py-1 rounded-full">Data
+                                    Analysis</span>
+                                <span
+                                    class="bg-gray-200 text-gray-800 text-sm font-semibold mr-2 px-3 py-1 rounded-full">Data
+                                    Modeling</span>
+                            </div>
+                            <div class="flex items-center space-x-4">
+                                <a href="https://laptop-recommendation-wcp9qmpmgh5wogfbm8zhaa.streamlit.app/"
+                                    target="_blank"
+                                    class="font-semibold text-black hover:underline inline-flex items-center">
+                                    Live Demo <i data-lucide="external-link" class="ml-1 w-4 h-4"></i>
+                                </a>
+                                <a href="https://github.com/surajksharma7/Laptop-Recommendation" target="_blank"
+                                    class="font-semibold text-black hover:underline inline-flex items-center">
+                                    Source Code <i data-lucide="github" class="ml-1 w-4 h-4"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-item gsap-reveal grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center"
+                        data-category="ml nlp">
+                        <div class="bg-white p-4 rounded-lg shadow-lg border border-gray-200 md:order-2">
+                            <img src="./projectImage/youtube-analysis.png"
+                                onerror="this.onerror=null;this.src='https://placehold.co/1280x720/e5e7eb/111827?text=Project+Screenshot';"
+                                alt="YouTube Comment Analysis Screenshot" class="rounded-md w-full object-cover">
+                        </div>
+                        <div class="text-left md:order-1">
+                            <h3 class="text-3xl font-bold mb-3 text-black">CommentML: YouTube Comment Analysis</h3>
+                            <p class="text-gray-700 mb-4 leading-relaxed"> currently work is going on
+                            </p>
+                            <div class="flex flex-wrap gap-2 mb-6">
+                                <span
+                                    class="bg-gray-200 text-gray-800 text-sm font-semibold mr-2 px-3 py-1 rounded-full">Streamlit</span>
+                                <span
+                                    class="bg-gray-200 text-gray-800 text-sm font-semibold mr-2 px-3 py-1 rounded-full">Scikit-learn</span>
+                                <span class_linter-ignore"bg-gray-200 text-gray-800 text-sm font-semibold mr-2 px-3 py-1
+                                    rounded-full">NLTK</span>
+                                <span
+                                    class="bg-gray-200 text-gray-800 text-sm font-semibold mr-2 px-3 py-1 rounded-full">YouTube
+                                    API</span>
+                            </div>
+                            <div class="flex items-center space-x-4">
+                                <a href="https://github.com/surajksharma7/CommentML-YoutubeAnalysis" target="_blank"
+                                    class="font-semibold text-black hover:underline inline-flex items-center">
+                                    Live Demo <i data-lucide="external-link" class="ml-1 w-4 h-4"></i>
+                                </a>
+                                <a href="https://github.com/surajksharma7/CommentML-YoutubeAnalysis" target="_blank"
+                                    class="font-semibold text-black hover:underline inline-flex items-center">
+                                    Source Code <i data-lucide="github" class="ml-1 w-4 h-4"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="text-center mt-20">
+                    <a href="https://github.com/surajksharma7?tab=repositories" target="_blank"
+                        rel="noopener noreferrer"
+                        class="gsap-reveal bg-white hover:bg-gray-200 text-black font-bold py-3 px-8 rounded-full text-lg btn inline-flex items-center transition-colors border-2 border-gray-300">
+                        View All Projects on GitHub <i data-lucide="arrow-right" class="w-5 h-5 ml-2"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section id="blog" class="py-24 bg-white">
+            <div class="container mx-auto px-6 max-w-7xl">
+                <h2 class="gsap-reveal text-4xl font-bold text-center mb-12 text-black">Recent Writings</h2>
+
+                <div id="blog-filters" class="gsap-reveal flex flex-wrap justify-center gap-2 md:gap-4 mb-16">
+                    <button data-filter="all"
+                        class="blog-filter-btn active-filter bg-black text-white font-semibold py-2 px-5 rounded-full transition-colors">All</button>
+                    <button data-filter="ml"
+                        class="blog-filter-btn bg-white text-gray-700 font-semibold py-2 px-5 rounded-full transition-colors hover:bg-gray-200">Machine
+                        Learning</button>
+                    <button data-filter="xai"
+                        class="blog-filter-btn bg-white text-gray-700 font-semibold py-2 px-5 rounded-full transition-colors hover:bg-gray-200">Explainable
+                        AI</button>
+                    <button data-filter="genai"
+                        class="blog-filter-btn bg-white text-gray-700 font-semibold py-2 px-5 rounded-full transition-colors hover:bg-gray-200">Generative
+                        AI</button>
+                    <button data-filter="viz"
+                        class="blog-filter-btn bg-white text-gray-700 font-semibold py-2 px-5 rounded-full transition-colors hover:bg-gray-200">Data
+                        Visualization</button>
+                </div>
+
+                <div id="blog-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="blog-item gsap-reveal bg-gradient-to-br from-white to-slate-50 p-6 rounded-2xl border border-slate-200 transition-all duration-300 ease-in-out hover:border-black hover:shadow-2xl hover:-translate-y-2"
+                        data-category="ml">
+                        <img src="./blog/blog1.webp" alt="Blog post on Explainable AI"
+                            class="w-full h-48 object-cover rounded-md mb-4">
+                        <div class="px-2 pb-2">
+                            <span
+                                class="bg-gray-200 text-gray-800 text-xs font-semibold mb-2 px-2.5 py-0.5 rounded-full">Machine
+                                Learning</span>
+                            <h3 class="text-xl font-bold mt-2 mb-2 text-gray-900">Machine Learning vs. Deep Learning:
+                                What’s the Difference?</h3>
+                            <p class="text-gray-600 mb-4 text-sm leading-relaxed">
+                                Artificial Intelligence (AI) has been evolving rapidly, transforming industries and
+                                reshaping the way we interact with technology. Two of the most commonly
+                                <a href="https://surajksharma2004.medium.com/machine-learning-vs-deep-learning-whats-the-difference-b4e85922be6b"
+                                    target="_blank" rel="noopener noreferrer"
+                                    class="font-semibold text-black hover:underline inline-flex items-center">
+                                    Read More <i data-lucide="arrow-right" class="w-4 h-4 ml-1"></i>
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="blog-item gsap-reveal bg-gradient-to-br from-white to-slate-50 p-6 rounded-2xl border border-slate-200 transition-all duration-300 ease-in-out hover:border-black hover:shadow-2xl hover:-translate-y-2"
+                        data-category="ml">
+                        <img src="./blog/blog2.webp" alt="Blog post on Explainable AI"
+                            class="w-full h-48 object-cover rounded-md mb-4">
+                        <div class="px-2 pb-2">
+                            <span
+                                class="bg-gray-200 text-gray-800 text-xs font-semibold mb-2 px-2.5 py-0.5 rounded-full">Machine
+                                Learning</span>
+                            <h3 class="text-xl font-bold mt-2 mb-2 text-gray-900">Taming the Wild Model: An Introduction
+                                to Ridge Regression</h3>
+                            <p class="text-gray-600 mb-4 text-sm leading-relaxed">
+                                Have you ever trained a machine learning model that performed spectacularly on your
+                                training data
+                                <a href="https://surajksharma2004.medium.com/taming-the-wild-model-an-introduction-to-ridge-regression-34ceaa39800c"
+                                    target="_blank" rel="noopener noreferrer"
+                                    class="font-semibold text-black hover:underline inline-flex items-center">
+                                    Read More <i data-lucide="arrow-right" class="w-4 h-4 ml-1"></i>
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center mt-16">
+                    <a href="https://medium.com/@surajksharma2304" target="_blank" rel="noopener noreferrer"
+                        class="gsap-reveal bg-black hover:bg-gray-800 text-white font-bold py-3 px-8 rounded-full text-lg inline-flex items-center transition-colors">
+                        View All Posts on Medium
+                    </a>
+                </div>
+            </div>
+        </section>
+
+
+        <section id="skills" class="py-24 bg-gray-50">
+            <div class="container mx-auto px-6 text-center max-w-7xl">
+                <h2 class="gsap-reveal text-4xl font-bold mb-4 text-black">Technical Skills</h2>
+                <p class="gsap-reveal text-lg text-gray-600 mb-16 max-w-2xl mx-auto">
+                    A curated list of the tools and technologies I use to turn data into intelligent solutions.
+                </p>
+                <div class="gsap-reveal grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16 text-left">
+                    <div class="bg-gradient-to-br from-white to-slate-50 rounded-2xl p-8 
+                        transition-all duration-300 ease-in-out border border-slate-200 
+                        hover:border-black hover:shadow-2xl hover:-translate-y-2">
+                        <div class="flex items-center mb-3">
+                            <div class="flex items-center justify-center w-12 h-12 rounded-xl bg-gray-100 mr-4">
+                                <i data-lucide="brain-circuit" class="w-7 h-7 text-black"></i>
+                            </div>
+                            <h3 class="text-2xl font-bold text-gray-900">AI & Machine Learning</h3>
+                        </div>
+                        <p class="text-gray-600 mb-6">Building and deploying intelligent models from classical
+                            algorithms to modern deep learning.</p>
+                        <div class="flex flex-wrap gap-3">
+                            <span
+                                class="bg-slate-100 text-gray-700 font-medium px-4 py-2 rounded-full text-sm transition-colors hover:bg-gray-200">Machine
+                                Learning</span>
+                            <span
+                                class="bg-slate-100 text-gray-700 font-medium px-4 py-2 rounded-full text-sm transition-colors hover:bg-gray-200">Deep
+                                Learning</span>
+                            <span
+                                class="bg-slate-100 text-gray-700 font-medium px-4 py-2 rounded-full text-sm transition-colors hover:bg-gray-200">Generative
+                                AI (LLMs)</span>
+                            <span
+                                class="bg-slate-100 text-gray-700 font-medium px-4 py-2 rounded-full text-sm transition-colors hover:bg-gray-200">Hugging
+                                Face</span>
+                            <span
+                                class="bg-slate-100 text-gray-700 font-medium px-4 py-2 rounded-full text-sm transition-colors hover:bg-gray-200">Scikit-learn</span>
+                            <span
+                                class="bg-slate-100 text-gray-700 font-medium px-4 py-2 rounded-full text-sm transition-colors hover:bg-gray-200">XGBoost</span>
+                            <span
+                                class="bg-slate-100 text-gray-700 font-medium px-4 py-2 rounded-full text-sm transition-colors hover:bg-gray-200">MLOps</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-gradient-to-br from-white to-slate-50 rounded-2xl p-8 
+                        transition-all duration-300 ease-in-out border border-slate-200 
+                        hover:border-black hover:shadow-2xl hover:-translate-y-2">
+                        <div class="flex items-center mb-3">
+                            <div class="flex items-center justify-center w-12 h-12 rounded-xl bg-gray-100 mr-4">
+                                <i data-lucide="line-chart" class="w-7 h-7 text-black"></i>
+                            </div>
+                            <h3 class="text-2xl font-bold text-gray-900">Data Science & Analytics</h3>
+                        </div>
+                        <p class="text-gray-600 mb-6">Wrangling, analyzing, and visualizing data to uncover actionable
+                            insights.</p>
+                        <div class="flex flex-wrap gap-3">
+                            <span
+                                class="bg-slate-100 text-gray-700 font-medium px-4 py-2 rounded-full text-sm transition-colors hover:bg-gray-200">Pandas
+                                & NumPy</span>
+                            <span
+                                class="bg-slate-100 text-gray-700 font-medium px-4 py-2 rounded-full text-sm transition-colors hover:bg-gray-200">Data
+                                Preprocessing</span>
+                            <span
+                                class="bg-slate-100 text-gray-700 font-medium px-4 py-2 rounded-full text-sm transition-colors hover:bg-gray-200">Feature
+                                Engineering</span>
+                            <span
+                                class="bg-slate-100 text-gray-700 font-medium px-4 py-2 rounded-full text-sm transition-colors hover:bg-gray-200">Matplotlib
+                                & Seaborn</span>
+                            <span
+                                class="bg-slate-100 text-gray-700 font-medium px-4 py-2 rounded-full text-sm transition-colors hover:bg-gray-200">Power
+                                BI</span>
+                            <span
+                                class="bg-slate-100 text-gray-700 font-medium px-4 py-2 rounded-full text-sm transition-colors hover:bg-gray-200">Tableau</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-gradient-to-br from-white to-slate-50 rounded-2xl p-8 
+                        transition-all duration-300 ease-in-out border border-slate-200 
+                        hover:border-black hover:shadow-2xl hover:-translate-y-2">
+                        <div class="flex items-center mb-3">
+                            <div class="flex items-center justify-center w-12 h-12 rounded-xl bg-gray-100 mr-4">
+                                <i data-lucide="terminal-square" class="w-7 h-7 text-black"></i>
+                            </div>
+                            <h3 class="text-2xl font-bold text-gray-900">Languages & Core Tools</h3>
+                        </div>
+                        <p class="text-gray-600 mb-6">The foundational technologies that power my development workflow.
+                        </p>
+                        <div class="flex flex-wrap gap-3">
+                            <span
+                                class="bg-slate-100 text-gray-700 font-medium px-4 py-2 rounded-full text-sm transition-colors hover:bg-gray-200">Python</span>
+                            <span
+                                class="bg-slate-100 text-gray-700 font-medium px-4 py-2 rounded-full text-sm transition-colors hover:bg-gray-200">SQL</span>
+                            <span
+                                class="bg-slate-100 text-gray-700 font-medium px-4 py-2 rounded-full text-sm transition-colors hover:bg-gray-200">Git
+                                & GitHub</span>
+                            <span
+                                class="bg-slate-100 text-gray-700 font-medium px-4 py-2 rounded-full text-sm transition-colors hover:bg-gray-200">Docker</span>
+                            <span
+                                class="bg-slate-100 text-gray-700 font-medium px-4 py-2 rounded-full text-sm transition-colors hover:bg-gray-200">Linux/Shell</span>
+                            <span
+                                class="bg-slate-100 text-gray-700 font-medium px-4 py-2 rounded-full text-sm transition-colors hover:bg-gray-200">Data
+                                Structures</span>
+                            <span
+                                class="bg-slate-100 text-gray-700 font-medium px-4 py-2 rounded-full text-sm transition-colors hover:bg-gray-200">C++</span>
+                        </div>
+                    </div>
+                </div>
+                <a href="./pdf/Suraj_kumar.pdf" download
+                    class="gsap-reveal bg-black hover:bg-gray-800 text-white font-bold py-3 px-8 rounded-full text-lg btn inline-flex items-center transition-colors">
+                    <i data-lucide="download" class="w-5 h-5 mr-2"></i>
+                    Download My Resume
+                </a>
+            </div>
+        </section>
+
+
+        <section id="contact" class="py-24 bg-gray-50">
+            <div class="container mx-auto px-6 text-center max-w-2xl">
+                <h2 class="gsap-reveal text-4xl font-bold mb-4 text-black">Get In Touch</h2>
+                <p class="gsap-reveal text-lg text-gray-600 mb-8">
+                    I'm always open to new opportunities and collaborations. Let's build something amazing together.
+                </p>
+                <a href="mailto:surajksharma7@outlook.com"
+                    class="gsap-reveal bg-black hover:bg-gray-800 text-white font-bold py-4 px-10 rounded-full text-lg btn shadow-lg inline-block transition-colors">
+                    Say Hello
+                </a>
+                <div class="gsap-reveal flex justify-center space-x-6 mt-12">
+                    <a href="https://github.com/surajksharma7" target="_blank" aria-label="GitHub Profile"
+                        class="text-gray-500 hover:text-black transition-transform transform hover:scale-110"><i
+                            data-lucide="github" class="w-8 h-8"></i></a>
+                    <a href="https://in.linkedin.com/in/surajksharma7" target="_blank" aria-label="LinkedIn Profile"
+                        class="text-gray-500 hover:text-black transition-transform transform hover:scale-110"><i
+                            data-lucide="linkedin" class="w-8 h-8"></i></a>
+                    <a href="https://x.com/surajksharma23" target="_blank" aria-label="X Profile"
+                        class="text-gray-500 hover:text-black transition-transform transform hover:scale-110">
+                        <svg class="w-8 h-8" role="img" viewBox="0 0 24 24" fill="currentColor"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <title>X</title>
+                            <path
+                                d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z" />
+                        </svg>
+                    </a>
+                    <a href="https://leetcode.com/surajksharma7" target="_blank" aria-label="LeetCode Profile"
+                        class="text-gray-500 hover:text-black transition-transform transform hover:scale-110">
+                        <svg class="w-8 h-8" role="img" viewBox="0 0 24 24" fill="currentColor"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <title>LeetCode</title>
+                            <path
+                                d="M13.48 4.26l-2.85 2.85 2.85 2.85 2.08-2.08c.6-.6.6-1.56 0-2.15l-.78-.78c-.59-.59-1.55-.59-2.15 0zm-4.33 4.33L6.3 11.44l5.3 5.3 2.85-2.85-5.3-5.3zM2 12l1.41 1.41L12 4.83 10.59 3.41 2 12zm10.59 7.17L12 20.59l8.59-8.59L19.17 10.59 12.59 17.17z" />
+                        </svg>
+                    </a>
+                    <a href="https://codeforces.com/profile/surajksharma7" target="_blank"
+                        aria-label="Codeforces Profile"
+                        class="text-gray-500 hover:text-black transition-transform transform hover:scale-110">
+                        <svg class="w-8 h-8" role="img" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <title>Codeforces</title>
+                            <path
+                                d="M4 10a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 01-1 1H5a1 1 0 01-1-1v-4zM10 6a1 1 0 011-1h2a1 1 0 011 1v8a1 1 0 01-1 1h-2a1 1 0 01-1-1V6zM16 2a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V2z" />
+                        </svg>
+                    </a>
+                    <a href="https://medium.com/@surajksharma2304" target="_blank" aria-label="Medium Profile"
+                        class="text-gray-500 hover:text-black transition-transform transform hover:scale-110">
+                        <svg class="w-8 h-8" role="img" viewBox="0 0 24 24" fill="currentColor"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <title>Medium</title>
+                            <path
+                                d="M7.45 2.68H4V21.32H7.45V2.68zM15.73 2.68H12.28V21.32H15.73V2.68zM24 11.63c0-4.95-3.03-9-8.27-9H17.5v2.55h-1.73c2.83 0 5.15 3.1 5.15 6.45 0 3.35-2.32 6.45-5.15 6.45H17.5v2.55h-1.77c5.24 0 8.27-4.05 8.27-9z" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="py-6 bg-white">
+        <div class="container mx-auto px-6 text-center text-gray-500">
+            <p>&copy; <span id="copyright-year">2025</span> Suraj Kumar. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+
+            const header = document.getElementById('header');
+
+            // --- Preloader ---
+            const preloader = document.getElementById('preloader');
+            window.addEventListener('load', () => {
+                setTimeout(() => {
+                    preloader.style.opacity = '0';
+                    setTimeout(() => preloader.style.display = 'none', 500);
+                }, 500);
+            });
+
+            // --- Custom Cursor ---
+            const cursor = document.querySelector('.cursor');
+            if (cursor) {
+                const interactiveElements = document.querySelectorAll('a, button, .hover\\:-translate-y-2, .hover\\:scale-105, .hover\\:-rotate-3');
+                gsap.set(cursor, { xPercent: -50, yPercent: -50 });
+                window.addEventListener('mousemove', e => {
+                    gsap.set(cursor, { x: e.clientX, y: e.clientY });
+                });
+                interactiveElements.forEach(el => {
+                    el.addEventListener('mouseenter', () => cursor.classList.add('cursor-grow'));
+                    el.addEventListener('mouseleave', () => cursor.classList.remove('cursor-grow'));
+                });
+            }
+
+            // --- GSAP Animations ---
+            gsap.registerPlugin(ScrollTrigger);
+            document.querySelectorAll('section').forEach(section => {
+                const revealElements = section.querySelectorAll('.gsap-reveal');
+                const revealImages = section.querySelectorAll('.gsap-reveal-img');
+                gsap.fromTo(revealElements, { opacity: 0, y: 50 }, {
+                    scrollTrigger: {
+                        trigger: section,
+                        start: "top 80%",
+                        end: "bottom 20%",
+                        toggleActions: "play none none reverse"
+                    },
+                    opacity: 1, y: 0, stagger: 0.15, duration: 0.8, ease: 'power3.out'
+                });
+                gsap.fromTo(revealImages, { opacity: 0, scale: 0.9 }, {
+                    scrollTrigger: {
+                        trigger: section,
+                        start: "top 80%",
+                        end: "bottom 20%",
+                        toggleActions: "play none none reverse"
+                    },
+                    opacity: 1, scale: 1, duration: 1, ease: 'power3.out'
+                });
+            });
+
+            // --- Header Scroll Effects ---
+            // Effect 1: Glassmorphism background on scroll
+            ScrollTrigger.create({
+                start: 'top -80',
+                end: 99999,
+                toggleClass: { className: 'glass-header', targets: header }
+            });
+
+            // NEW Effect 2: Hide header on scroll down, show on scroll up
+            let lastScrollTop = 0;
+            window.addEventListener("scroll", function () {
+                let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                if (scrollTop > lastScrollTop && scrollTop > header.offsetHeight) {
+                    // Scroll Down
+                    header.classList.add('header-hidden');
+                } else {
+                    // Scroll Up
+                    header.classList.remove('header-hidden');
+                }
+                lastScrollTop = scrollTop <= 0 ? 0 : scrollTop; // For Mobile or negative scrolling
+            }, false);
+
+
+            // --- Mobile Navigation ---
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('-translate-x-full');
+                const isHidden = mobileMenu.classList.contains('-translate-x-full');
+                mobileMenuButton.innerHTML = isHidden ? '<i data-lucide="menu"></i>' : '<i data-lucide="x"></i>';
+                lucide.createIcons();
+                document.body.style.overflow = isHidden ? '' : 'hidden';
+            });
+
+            mobileNavLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('-translate-x-full');
+                    mobileMenuButton.innerHTML = '<i data-lucide="menu"></i>';
+                    lucide.createIcons();
+                    document.body.style.overflow = '';
+                });
+            });
+
+            // --- Filtering Logic (Projects & Blog) ---
+            function setupFilter(filterButtonsClass, itemsClass) {
+                const filterButtons = document.querySelectorAll(filterButtonsClass);
+                const items = document.querySelectorAll(itemsClass);
+
+                filterButtons.forEach(button => {
+                    button.addEventListener('click', () => {
+                        filterButtons.forEach(btn => {
+                            btn.classList.remove('active-filter', 'bg-black', 'text-white');
+                            btn.classList.add('bg-white', 'text-gray-700');
+                        });
+                        button.classList.add('active-filter', 'bg-black', 'text-white');
+                        button.classList.remove('bg-white', 'text-gray-700');
+
+                        const filter = button.dataset.filter;
+
+                        items.forEach(item => {
+                            const itemCategories = item.dataset.category;
+                            const displayStyle = itemsClass.includes('project-item') ? 'grid' : 'block';
+
+                            item.style.transition = 'opacity 0.3s ease-out, transform 0.3s ease-out';
+
+                            if (filter === 'all' || (itemCategories && itemCategories.includes(filter))) {
+                                item.style.display = displayStyle;
+                                setTimeout(() => {
+                                    item.style.opacity = '1';
+                                    item.style.transform = 'scale(1)';
+                                }, 10);
+                            } else {
+                                item.style.opacity = '0';
+                                item.style.transform = 'scale(0.95)';
+                                setTimeout(() => {
+                                    item.style.display = 'none';
+                                }, 300);
+                            }
+                        });
+
+                        setTimeout(() => {
+                            ScrollTrigger.refresh();
+                        }, 310);
+                    });
+                });
+            }
+
+            setupFilter('.filter-btn', '#projects .project-item');
+            setupFilter('.blog-filter-btn', '#blog .blog-item');
+
+            // --- Smooth Scrolling for all links ---
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const targetElement = document.querySelector(this.getAttribute('href'));
+                    if (targetElement) {
+                        targetElement.scrollIntoView({
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+
+            // --- Dynamic Copyright Year ---
+            document.getElementById('copyright-year').textContent = new Date().getFullYear();
+        });
+    </script>
 </body>
+
 </html>
